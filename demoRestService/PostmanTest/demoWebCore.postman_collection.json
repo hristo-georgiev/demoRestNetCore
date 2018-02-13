@@ -1,0 +1,155 @@
+{
+	"info": {
+		"name": "demoWebCore",
+		"_postman_id": "096f8df9-3af0-4d48-d6a7-641815131043",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get customer by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{localhost}}/api/customer/get?id=1",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"customer",
+						"get"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Find customer by Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{localhost}}/api/customer/findcustomer?name=baba",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"customer",
+						"findcustomer"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "baba",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Customer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"FirstName\": \"TestUser2\",\n        \"SecondName\": \"tester\",\n        \"FamilyName\": \"User2\"\n    }"
+				},
+				"url": {
+					"raw": "{{localhost}}/api/customer/create",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"customer",
+						"create"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update Customer",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n    \t\"Id\": 6,\n        \"FirstName\": \"TestUser3\",\n        \"SecondName\": \"tester\",\n        \"FamilyName\": \"change1\"\n    }"
+				},
+				"url": {
+					"raw": "{{localhost}}/api/customer/update/6",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"customer",
+						"update",
+						"6"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Customer",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/api/customer/delete/5",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"api",
+						"customer",
+						"delete",
+						"5"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
