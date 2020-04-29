@@ -15,10 +15,12 @@ namespace demoRestService.Controllers
     public class AddressController : Controller
     {
         private readonly ILogger _log;
+        private readonly IMapper _mapper;
         private readonly IAddressRepository _adrRepo;
-        public AddressController(ILogger<AddressController> logger, IAddressRepository adrRepo)
+        public AddressController(ILogger<AddressController> logger, IMapper mapper, IAddressRepository adrRepo)
         {
             _log = logger;
+            _mapper = mapper; ;
             _adrRepo = adrRepo;
         }
 
@@ -26,7 +28,7 @@ namespace demoRestService.Controllers
         public AddressDto Get(int id)
         {
             var data = _adrRepo.GetSingle(id);
-            return Mapper.Map<AddressDto>(data);
+            return _mapper.Map<AddressDto>(data);
         }
 
         /* http://localhost:49822/api/address/getbycustomer?id=1 */
@@ -34,7 +36,7 @@ namespace demoRestService.Controllers
         public AddressDto GetByCustomer(int id)
         {
             var data = _adrRepo.FindByCustomer(id);
-            return Mapper.Map<AddressDto>(data);
+            return _mapper.Map<AddressDto>(data);
         }
     }
 }

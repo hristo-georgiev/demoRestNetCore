@@ -24,8 +24,8 @@ namespace datalib
 
     public interface IBaseRepository<T> where T : class, new()
     {
-        IEnumerable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties);
-        IEnumerable<T> GetAll();
+        IQueryable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties);
+        IQueryable<T> GetAll();
         int Count();
         T GetSingle(int id);
         T GetSingle(Expression<Func<T, bool>> predicate);
@@ -47,23 +47,23 @@ namespace datalib
             _context = context;
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual IQueryable<T> GetAll()
         {
-            return _context.Set<T>().AsEnumerable();
+            return _context.Set<T>();
         }
 
         public virtual int Count()
         {
             return _context.Set<T>().Count();
         }
-        public virtual IEnumerable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties)
+        public virtual IQueryable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties)
         {
             IQueryable<T> query = _context.Set<T>();
             foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
             }
-            return query.AsEnumerable();
+            return query;
         }
 
         public T GetSingle(int id)

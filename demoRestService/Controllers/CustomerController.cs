@@ -15,10 +15,12 @@ namespace demoRestService.Controllers
     public class CustomerController : Controller
     {
         private readonly ILogger _log;
+        private readonly IMapper _mapper;
         private readonly ICustomerRepository _custRepo;
-        public CustomerController(ILogger<CustomerController> logger, ICustomerRepository custRepo)
+        public CustomerController(ILogger<CustomerController> logger, IMapper mapper, ICustomerRepository custRepo)
         {
             _log = logger;
+            _mapper = mapper;
             _custRepo = custRepo;
         }
        
@@ -27,14 +29,14 @@ namespace demoRestService.Controllers
         public CustomerDto Get(int id)
         {
             var cust = _custRepo.GetSingle(id);
-            return Mapper.Map<CustomerDto>(cust);
+            return _mapper.Map<CustomerDto>(cust);
         }
        
         [HttpGet]
         //[Route("{name?}", Name = "FindCustomer")]        
         public IEnumerable<CustomerDto> FindCustomer(string name)
         {
-            return Mapper.Map <List<CustomerDto>>(_custRepo.FindByName(name));
+            return _mapper.Map <List<CustomerDto>>(_custRepo.FindByName(name));
         }
 
         [HttpPost]
@@ -42,9 +44,9 @@ namespace demoRestService.Controllers
         {
             try
             {
-                var newcust = _custRepo.Create(Mapper.Map<Customer>(customer));
+                var newcust = _custRepo.Create(_mapper.Map<Customer>(customer));
                 _custRepo.Commit();
-                CreatedAtRouteResult result = CreatedAtRoute( new { controller = "Customer", id = newcust.Id }, Mapper.Map<CustomerDto>(newcust));
+                CreatedAtRouteResult result = CreatedAtRoute( new { controller = "Customer", id = newcust.Id }, _mapper.Map<CustomerDto>(newcust));
                 return result;
             }
             catch (Exception e)
@@ -58,7 +60,7 @@ namespace demoRestService.Controllers
         {
             var dbcust = _custRepo.GetSingle(id);
             if (dbcust == null) return NotFound();
-            Mapper.Map<CustomerDto, Customer>(customer, dbcust);
+            _mapper.Map<CustomerDto, Customer>(customer, dbcust);
             _custRepo.Update(dbcust);
             _custRepo.Commit();
             return NoContent();
